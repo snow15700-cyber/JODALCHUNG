@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>화면3 시안</title>
+<link rel="stylesheet" href="../css/style.css?v=20">
+<style>
+  body { overflow: auto; background: #dfe6ef; font-family: var(--sans); padding: 14px; }
+  .row { display: flex; gap: 18px; align-items: flex-start; }
+  .opt { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .opt > b { font-family: var(--pixel); font-weight: 400; font-size: 15px; color: var(--navy); }
+  .phone { position: relative; width: 360px; height: 740px; overflow: hidden; border: 4px solid #9aa8bb; border-radius: 18px; background: linear-gradient(#bfe3fb, #e6f4fd 62%); display: flex; flex-direction: column; }
+  .cloud { position: absolute; width: 56px; height: 14px; background: #fff; box-shadow: 8px -8px 0 0 #fff, 24px -12px 0 2px #fff, 40px -6px 0 0 #fff; }
+  .scene { position: relative; width: 256px; height: 96px; transform-origin: 50% 100%; }
+  .scene img { position: absolute; bottom: 0; image-rendering: pixelated; }
+  .ground { background: #a8d38b; border-top: 4px solid #7fb862; }
+  .logo { image-rendering: auto; }
+  .msg { color: var(--navy); font-weight: 700; text-align: center; word-break: keep-all; }
+  .msg em { font-style: normal; color: var(--red); }
+  .sub { color: var(--ink); text-align: center; word-break: keep-all; }
+  .btns { display: flex; gap: 8px; width: 100%; }
+  .btns .btn { flex: 1; font-size: 14px; padding: 10px 0; }
+  .tagl { position: absolute; font-size: 11px; font-weight: 700; color: var(--navy); background: #fff; border: 2px solid var(--line); padding: 0 5px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="row">
+
+  <!-- A: 문구를 위에 크게, 장면은 화면 폭에 맞춰 -->
+  <div class="opt"><b>A · 문구 위, 장면 꽉 차게</b>
+    <div class="phone">
+      <i class="cloud" style="left:28px;top:300px"></i><i class="cloud" style="left:262px;top:340px"></i>
+      <div style="padding:48px 22px 0">
+        <div class="msg" style="font-size:31px;line-height:1.35">필요한 곳에<br><em>좋은 제품</em>을,<br>공정하게 잇습니다</div>
+        <p class="sub" style="font-size:15px;margin:14px 0 0;line-height:1.55">조달청은 공공기관과 좋은 제품을<br>나라장터에서 이어 줍니다.</p>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;justify-content:center;height:150px;align-items:flex-end"><div class="scene" data-s="1.375"></div></div>
+      <div class="ground" style="padding:22px 20px 26px;display:flex;flex-direction:column;align-items:center;gap:14px">
+        <div style="background:#fff;padding:6px 10px"><img class="logo" src="../assets/logo/logo_h.png" style="height:28px;display:block"></div>
+        <div class="btns"><span class="btn btn-primary">공유하기</span><span class="btn">다시하기</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B: 장면을 2배로 크게 (양쪽 인물은 화면 끝에 걸침), 문구는 아래 -->
+  <div class="opt"><b>B · 장면 2배, 문구 아래</b>
+    <div class="phone">
+      <i class="cloud" style="left:30px;top:150px"></i><i class="cloud" style="left:256px;top:200px"></i>
+      <div style="padding:42px 20px 0;text-align:center">
+        <div style="font-family:var(--pixel);font-size:18px;color:var(--red)">♥ 13건 모두 이었어요! ♥</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;justify-content:center;height:200px;align-items:flex-end;overflow:hidden"><div class="scene" data-s="2"></div></div>
+      <div class="ground" style="padding:20px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div class="msg" style="font-size:25px;line-height:1.4">공공기관의 필요와 좋은 제품,<br><em>조달청</em>이 공정하게 잇습니다</div>
+        <div style="background:#fff;padding:5px 9px"><img class="logo" src="../assets/logo/logo_h.png" style="height:26px;display:block"></div>
+        <div class="btns"><span class="btn btn-primary">공유하기</span><span class="btn">다시하기</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C: 가운데 큰 장면 + 문구 패널 (카드처럼 저장하기 좋게) -->
+  <div class="opt"><b>C · 큰 문구 패널 + 장면</b>
+    <div class="phone" style="background:linear-gradient(#bfe3fb,#e6f4fd 70%)">
+      <i class="cloud" style="left:40px;top:40px"></i><i class="cloud" style="left:260px;top:80px"></i>
+      <div style="margin:72px 18px 0;background:#fff;border:3px solid var(--line);box-shadow:0 6px 0 var(--line);padding:22px 16px 18px">
+        <div style="font-family:var(--pixel);font-size:14px;color:var(--muted);text-align:center">조달 매칭 작전 · 13건 성공</div>
+        <div class="msg" style="font-size:28px;line-height:1.38;margin-top:10px">좋은 제품과<br>공공기관을 잇는 곳,<br><em>조달청</em></div>
+        <div style="display:flex;justify-content:center;margin-top:14px"><img class="logo" src="../assets/logo/logo_h.png" style="height:28px"></div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;justify-content:center;height:140px;align-items:flex-end"><div class="scene" data-s="1.375"></div></div>
+      <div class="ground" style="padding:20px 20px 26px"><div class="btns"><span class="btn btn-primary">공유하기</span><span class="btn">다시하기</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="../data/stages.js?v=20"></script>
+<script src="../js/pixel.js?v=20"></script>
+<script>
+  const cast = [["public", 0], ["big", 52], ["small", 131], ["pps", 192]];
+  document.querySelectorAll(".scene").forEach(sc => {
+    const s = +sc.dataset.s;
+    sc.style.transform = `scale(${s})`;
+    cast.forEach(([w, x]) => {
+      const im = new Image(); im.src = Pixel.charURL(w, "hand0"); im.style.left = x + "px";
+      sc.appendChild(im);
+    });
+  });
+</script>
+</body>
+</html>

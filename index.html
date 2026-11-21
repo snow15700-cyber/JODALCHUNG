@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#eef4fb">
+  <title>조달 연결 작전</title>
+  <meta name="description" content="공공기관의 수요에 맞는 제품을 찾아 연결해 주세요! 조달청 역할을 담은 픽셀 게임">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="조달 연결 작전 | 조달청">
+  <meta property="og:description" content="공공기관에 꼭 맞는 제품을 찾아 연결해 주세요! 13단계 픽셀 게임">
+  <!-- 배포 주소가 정해지면 og:image 와 og:url 을 절대 주소(https://…)로 바꾸세요. 카카오톡 미리보기는 절대 주소가 필요합니다. -->
+  <meta property="og:image" content="assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/style.css?v=55">
+</head>
+<body>
+<div id="app">
+
+  <!-- ========== 메인 화면 ========== -->
+  <section id="screen-title" class="screen active">
+    <div class="title-wrap">
+      <img class="logo logo-v" src="assets/logo/logo_v.png" alt="조달청">
+      <h1 id="t-title" class="t-title"></h1>
+      <p id="t-sub" class="t-sub sans"></p>
+      <div id="t-chars" class="t-chars"></div>
+      <div id="t-flow" class="t-flow sans"></div>
+      <div id="t-how" class="t-how sans"></div>
+      <button id="btn-start" class="btn btn-primary" type="button">연결 시작</button>
+      <p id="t-policy" class="t-policy sans"></p>
+      <p id="t-fair" class="t-fair sans"></p>
+    </div>
+  </section>
+
+  <!-- ========== 플레이 화면 ========== -->
+  <section id="screen-game" class="screen">
+    <header class="topbar">
+      <img class="logo logo-h" src="assets/logo/logo_h.png" alt="조달청">
+      <div class="top-right"><span id="progress" class="progress">01/13</span></div>
+    </header>
+
+    <div id="req" class="req">
+      <div class="req-head"><b id="req-title">공공기관 수요</b><span id="req-stage">1단계</span></div>
+      <div class="req-agency sans"><img id="bld" class="px" alt=""><span id="req-agency"></span></div>
+      <p id="req-need" class="req-need sans"></p>
+      <button id="req-cat" class="req-cond sans" type="button"><span id="req-cond-k" class="cond-k">구매조건</span><strong id="req-type"></strong><span class="cond-i">?</span></button>
+      <div id="req-wants" class="req-wants"></div>
+      <!-- 연결 성공 연출: 기업 → 조달청 → 공공기관 -->
+      <div id="stamp" class="linkfx">
+        <div class="lf-row">
+          <div class="lf-node"><img id="lf-ic0" class="px" alt=""></div><i class="lf-bar"><b></b><img class="px lf-check" alt=""></i>
+          <div class="lf-node hub"><img id="lf-ic1" class="px" alt=""></div><i class="lf-bar"><b></b><img class="px lf-check" alt=""></i>
+          <div class="lf-node"><img id="lf-ic2" class="px" alt=""></div>
+        </div>
+        <div class="lf-names sans"><span id="lf-n0"></span><span id="lf-n1"></span><span id="lf-n2"></span></div>
+        <div id="lf-text" class="lf-text">연결 성공!</div>
+      </div>
+    </div>
+
+    <div id="timebar" class="timebar"><img id="clock" class="px clock" alt=""><div id="time-segs" class="time-segs"></div></div>
+    <div class="mall-row"><span id="mall" class="mall"></span><div id="lives" class="lives"></div></div>
+    <div id="grid" class="grid"></div>
+
+    <div class="floor">
+      <div id="big-char" class="char big"></div>
+      <div id="small-char" class="char small"></div>
+    </div>
+    <div id="bubble" class="bubble sans"></div>
+
+    <div id="banner" class="banner"></div>
+  </section>
+
+  <!-- ========== 조달 완료 확인서: 종이에 빠르게 기입되고 도장이 찍힘 ========== -->
+  <section id="screen-done" class="screen">
+    <div id="done-wrap" class="done-wrap">
+      <div class="paper">
+        <div class="paper-head"><b id="doc-title"></b><span id="doc-no" class="sans"></span></div>
+        <p id="done-sub" class="done-sub sans"></p>
+        <ol id="done-list" class="doc-list"></ol>
+        <div class="doc-foot"><p class="sans">발급처<br><b>조달청 나라장터</b></p><div id="doc-stamp" class="doc-stamp"><span id="doc-stamp-t"></span></div></div>
+      </div>
+      <p class="done-skip sans" id="done-skip">화면을 누르면 바로 모두 볼 수 있어요</p>
+      <button id="btn-ending" class="btn btn-primary" type="button">결과 보기 ▶</button>
+    </div>
+  </section>
+  <!-- ========== 마지막 화면 (C안): 메시지 + 판로지원 가치 + 손잡기 장면 ========== -->
+  <section id="screen-result" class="screen">
+    <div class="res-sky"><i class="cloud" style="left:8%;top:3%"></i><i class="cloud" style="left:70%;top:7%"></i></div>
+    <div class="res-panel">
+      <div id="res-kicker" class="res-kicker"></div>
+      <div id="res-msg" class="res-msg sans"></div>
+      <p id="res-body" class="res-body sans"></p>
+      <ul id="res-values" class="res-values sans"></ul>
+      <img class="logo res-logo" src="assets/logo/logo_h.png" alt="조달청">
+    </div>
+    <div id="res-scene" class="res-scene">
+      <div id="end-badges" class="end-badges"></div>
+      <div id="end-row" class="end-row">
+        <div id="e-public" class="char person walker from-left" style="left:0"><span class="tag sans">공공기관</span></div>
+        <div id="e-big" class="char big mid" style="left:52px"></div>
+        <div id="e-small" class="char small mid" style="left:131px"></div>
+        <div id="e-biz" class="char person walker from-right" style="left:192px"><span class="tag sans">기업</span></div>
+      </div>
+    </div>
+    <div class="res-ground">
+      <div class="btn-row">
+        <button id="btn-share" class="btn btn-primary" type="button">공유하기</button>
+        <button id="btn-retry" class="btn" type="button">다시하기</button>
+      </div>
+      <div class="res-links sans"><a id="btn-save" href="#" download="조달연결작전.png">이미지 저장</a><span>·</span><button id="btn-home" class="btn-link" type="button">처음 화면으로</button></div>
+    </div>
+  </section>
+  <div id="toast" class="toast sans"></div>
+
+  <!-- 소리 켜기/끄기 (배경음악 + 효과음) -->
+  <button id="btn-sound" class="btn-sound" type="button" aria-label="소리 끄기">
+    <svg viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+      <path d="M1 4h2v4H1zM4 3h1v6H4zM5 2h1v8H5zM6 1h1v10H6z"/>
+      <path class="on" d="M8 5h1v2H8zM10 3h1v6h-1zM9 2h1v1H9zM9 9h1v1H9z"/>
+      <path class="x" d="M8 4h1v1H8zM9 5h1v1H9zM10 6h1v1h-1zM11 7h1v1h-1zM11 4h1v1h-1zM10 5h1v1h-1zM9 6h1v1H9zM8 7h1v1H8z"/>
+    </svg>
+  </button>
+
+
+  <!-- 유형 설명 팝업 -->
+  <div id="popup" class="modal">
+    <div class="modal-card">
+      <div id="pop-head" class="pop-head">✦ 유형 배지 획득! ✦</div>
+      <div id="pop-badge" class="pop-badge"></div>
+      <div id="pop-stage" class="pop-stage"></div>
+      <div id="pop-type" class="pop-type sans"></div>
+      <hr>
+      <p id="pop-easy" class="pop-easy sans"></p>
+      <p id="pop-more" class="pop-more sans"></p>
+      <div class="pop-foot"><img id="pop-face" class="px pop-face" alt=""><button id="pop-btn" class="btn btn-primary" type="button">다음 단계 ▶</button></div>
+    </div>
+  </div>
+
+  <!-- 짧은 안내 (작은 캐릭터) -->
+  <div id="tip" class="modal tip">
+    <div class="tip-card sans"><img id="tip-face" class="px" alt=""><p id="tip-text"></p><span class="tip-go">눌러서 시작 ▶</span></div>
+  </div>
+</div>
+
+<script src="js/config.js?v=55"></script>
+<script src="data/texts.js?v=55"></script>
+<script src="data/items.js?v=55"></script>
+<script src="data/stages.js?v=55"></script>
+<script src="js/pixel.js?v=55"></script>
+<script src="js/audio.js?v=55"></script>
+<script src="js/share.js?v=55"></script>
+<script src="js/game.js?v=55"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>그림 확인</title>
+<link rel="stylesheet" href="../css/style.css?v=11">
+<style>
+  body { overflow: auto; font-family: var(--sans); padding: 16px; }
+  h2 { font-family: var(--pixel); font-weight: 400; font-size: 17px; color: var(--navy); margin: 22px 0 8px; }
+  p.note { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .card { background: #fff; border: 2px solid var(--cell-line); padding: 6px; text-align: center; font-size: 12px; }
+  .card img { width: 96px; height: 96px; image-rendering: pixelated; display: block; }
+  .card.small img { width: 48px; height: 48px; }
+  .gray img { filter: grayscale(1); }
+  .new { color: var(--red); font-weight: 700; }
+  .badge-card { width: 150px; }
+  .badge-card img { width: 72px; height: 72px; margin: 0 auto 4px; }
+</style>
+</head>
+<body>
+<h2>물품 14종 (기본색, 2배)</h2>
+<p class="note">빨간 글씨는 2단계에서 새로 그린 물품</p>
+<div class="row" id="items"></div>
+<h2>흑백으로 보기 (모양만으로 구분되는지)</h2>
+<div class="row gray" id="gray"></div>
+<h2>색 변형 (같은 색 방해물, 1배)</h2>
+<div class="row" id="colors"></div>
+<h2>캐릭터 동작 프레임 (2배)</h2>
+<p class="note">위: 프레임 하나씩 / 아래: 실제로 움직이는 모습</p>
+<div class="row" id="frameRow"></div>
+<div class="row" id="live" style="margin-top:10px"></div>
+<h2>유형 배지 13종 (3배)</h2>
+<div class="row" id="badges"></div>
+<script src="../data/items.js?v=11"></script>
+<script src="../data/stages.js?v=11"></script>
+<script src="../js/pixel.js?v=11"></script>
+<script>
+  const NEW = ["desk", "led", "bin", "pottery", "fan", "hanji"];
+  const card = (src, label, cls = "") => `<div class="card ${cls}"><img src="${src}">${label}</div>`;
+  const ids = Object.keys(ITEMS);
+  items.innerHTML = ids.map(id => card(Pixel.itemURL(id, ITEMS[id].color), NEW.includes(id) ? `<span class="new">${ITEMS[id].name}</span>` : ITEMS[id].name)).join("");
+  gray.innerHTML = ids.map(id => card(Pixel.itemURL(id, ITEMS[id].color), ITEMS[id].name)).join("");
+  colors.innerHTML = ["white", "brown", "orange", "red", "blue", "yellow"].map(c =>
+    ids.filter(id => ITEMS[id].colors.includes(c)).map(id => card(Pixel.itemURL(id, c), `${Pixel.COLOR_NAME[c]} ${ITEMS[id].name}`, "small")).join("")
+  ).join("");
+  const FN = { idle0: "기본", idle1: "숨쉬기", talk0: "말하기 1", talk1: "말하기 2", happy: "기쁨", sad: "당황", hand0: "손잡기 1", hand1: "손잡기 2" };
+  const charCard = (w, f) => `<div class="card"><img src="${Pixel.charURL(w, f)}" style="width:${{ big: 192, small: 144, public: 128, pps: 128 }[w]}px;height:${w === "small" ? 144 : 192}px">${FN[f]}</div>`;
+  frameRow.innerHTML = ["big", "small", "public", "pps"].map(w => Object.keys(Pixel.FRAMES[w]).map(f => charCard(w, f)).join("")).join("");
+  const LOOPS = [["기본", ["idle0", "idle1"], 520], ["말하기", ["talk0", "talk1"], 150], ["손잡기", ["hand0", "hand1"], 260]];
+  live.innerHTML = LOOPS.map(([n], i) => `<div class="card"><div style="display:flex;align-items:flex-end;gap:6px"><img data-w="big" data-i="${i}" style="width:192px;height:192px"><img data-w="small" data-i="${i}" style="width:144px;height:144px"></div>${n}</div>`).join("");
+  let tick = 0;
+  setInterval(() => { tick++; live.querySelectorAll("img").forEach(im => {
+    const [n, fr, ms] = LOOPS[im.dataset.i]; let list = fr;
+    if (im.dataset.w === "big" && n === "말하기") list = ["idle0", "idle0"];
+    im.src = Pixel.charURL(im.dataset.w, list[Math.floor(tick * 50 / ms) % 2]);
+  }); }, 50);
+  badges.innerHTML = STAGES.map((s, i) => card(Pixel.badgeURL(...s.badge), `${String(i + 1).padStart(2, "0")} ${s.type}`, "badge-card")).join("");
+</script>
+</body>
+</html>

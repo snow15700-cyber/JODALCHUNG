@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>OG 이미지 만들기</title>
+<link rel="stylesheet" href="../css/style.css?v=55">
+<style>
+  body { overflow: auto; padding: 16px; font-family: var(--sans); }
+  #out { width: 100%; max-width: 1200px; display: block; border: 1px solid #ccc; margin: 10px 0; }
+</style>
+</head>
+<body>
+<p>링크 미리보기(OG) 대표 이미지 1200×630. 아래 버튼으로 저장해 <code>assets/og.png</code>에 두세요.</p>
+<a id="dl" download="og.png" href="#">PNG 저장</a>
+<img id="out" alt="OG 이미지">
+<script src="../data/texts.js?v=55"></script>
+<script src="../data/stages.js?v=55"></script>
+<script src="../js/pixel.js?v=55"></script>
+<script src="../js/share.js?v=55"></script>
+<script>
+  (async () => {
+    const cv = await Share.makeOG({
+      title: TEXTS.title, subtitle: TEXTS.subtitle,
+      tagline: ["제품과 공공기관을", "연결해 주세요!"], chip: "13단계 도전 ▶",
+      logo: "../assets/logo/logo_h.png", badges: STAGES.map(s => s.badge)
+    });
+    const url = cv.toDataURL("image/png");
+    document.getElementById("out").src = url;
+    document.getElementById("dl").href = url;
+    window.OG_DATA = url;
+  })();
+</script>
+</body>
+</html>
